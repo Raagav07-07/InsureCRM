@@ -29,12 +29,26 @@ function ProtectedRoute({ children }) {
 // 🧱 Main Layout (Sidebar + Header)
 function Layout({ children }) {
   return (
-    <div className="min-h-screen text-slate-100">
+    <div className="flex min-h-screen flex-col text-slate-100">
       <Sidebar />
 
-      <div className="lg:pl-72">
+      <div className="flex flex-1 flex-col lg:pl-72">
         <Header />
-        <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">{children}</main>
+        <main className="flex-1 mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">{children}</main>
+        <footer className="border-t border-slate-800/70 py-4 text-center text-[11px] text-slate-500">
+          <p>
+            Developed by{" "}
+            <span className="font-medium text-slate-400">Thiru Raagavendran</span>
+          </p>
+          <p className="mt-0.5">
+            <a
+              href="mailto:raagavendranselvaraj@gmail.com"
+              className="text-sky-500 transition hover:text-sky-400"
+            >
+              raagavendranselvaraj@gmail.com
+            </a>
+          </p>
+        </footer>
       </div>
     </div>
   );

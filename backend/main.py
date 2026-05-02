@@ -1,4 +1,3 @@
-import os
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
@@ -23,12 +22,13 @@ def run_migrations():
 
 run_migrations()
 
-frontend_origins = os.getenv(
-    "FRONTEND_ORIGINS",
-    "http://localhost:5173,http://127.0.0.1:5173,http://localhost:4173,http://127.0.0.1:4173,https://insure-crm-gamma.vercel.app",
-)
-
-origins = [o.strip() for o in frontend_origins.split(",") if o.strip()]
+origins = [
+    "https://insure-crm-gamma.vercel.app",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:4173",
+    "http://127.0.0.1:4173",
+]
 
 app.add_middleware(
     CORSMiddleware,
