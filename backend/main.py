@@ -1,11 +1,10 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from db.sessions import engine
 from routes import clients, policies, upload, reminders, analytics
 import traceback
-
-app = FastAPI()
 
 
 def run_migrations():
@@ -17,10 +16,23 @@ def run_migrations():
     ]
     with engine.begin() as conn:
         for statement in statements:
-            conn.execute(text(statement))
+            try:
+                conn.execute(text(statement))
+            except Exception as e:
+                print(f"Migration skipped: {e}")
 
 
-run_migrations()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    try:
+        run_migrations()
+        print("Database migrations completed")
+    except Exception as e:
+        print(f"Migration failed (will retry on next request): {e}")
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 
 origins = [
     "https://insure-crm-gamma.vercel.app",
