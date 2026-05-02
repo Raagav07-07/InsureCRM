@@ -18,7 +18,7 @@ frontend_origins = os.getenv(
     "http://localhost:5173,http://127.0.0.1:5173,http://localhost:4173,http://127.0.0.1:4173",
 )
 
-origins = [origin.strip() for origin in frontend_origins.split(",") if origin.strip()]
+origins = ["http://localhost:5173","https://insure-crm-gamma.vercel.app"]
 
 app.add_middleware(
     CORSMiddleware,
